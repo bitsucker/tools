@@ -51,10 +51,6 @@ endif
 if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
-endif
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
 
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
@@ -106,13 +102,15 @@ set smartindent
 set cindent
 set nobackup
 
-set tags+=/home/mayuheng/.mttags
-set tags+=/home/mayuheng/.pktags
+set tags+=~/.mttags
+set tags+=~/.pktags
 
 " pathogen
 let pathogen = $HOME . '/.vim/bundle/vim-pathogen/autoload/pathogen.vim'
-execute "source " . pathogen
-call pathogen#infect()
+if filereadable("$pathogen")
+  execute "source " . pathogen
+  call pathogen#infect()
+endif
 
 function! BundlesInit()
     let bundles = {
@@ -174,7 +172,7 @@ let g:LookupFile_PreserveLastPattern = 0        "不保存上次查找的字符�
 let g:LookupFile_PreservePatternHistory = 1     "保存查找历史
 let g:LookupFile_AlwaysAcceptFirst = 1          "回车打开第一个匹配项目
 let g:LookupFile_AllowNewFiles = 0              "不允许创建不存在的文件
-let g:LookupFile_TagExpr = '"/home/mayuheng/.mtfnametags"'
+let g:LookupFile_TagExpr = '"~/.mtfnametags"'
 
 "映射LookupFile为,lk
 map <silent> <leader>lk :LUTags<cr>
